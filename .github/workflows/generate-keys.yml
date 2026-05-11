@@ -1,0 +1,18 @@
+name: Generate SSH Deploy Keys (one-time setup)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  generate:
+    name: Generate SSH Key Pair
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Generate key pair
+        run: |
+          ssh-keygen -t ed25519 -C "github-deploy" -f deploy_key -N ""
+          echo "========== PUBLIC KEY (add to Hostinger SSH Access) =========="
+          cat deploy_key.pub
+          echo "========== PRIVATE KEY (add as SSH_KEY secret in GitHub) =========="
+          cat deploy_key
